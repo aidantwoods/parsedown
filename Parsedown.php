@@ -170,6 +170,20 @@ class Parsedown
 
             $Line = array('body' => $line, 'indent' => $indent, 'text' => $text);
 
+
+            # ~
+
+            if (isset($text[0]))
+            {
+                $marker = $text[0];
+            }
+            elseif ($this->literalBreaks)
+            {
+                $marker = '\n';
+                
+                $Line['text'] = $text = '  ';
+            }
+
             # ~
 
             if (isset($CurrentBlock['continuable']))
@@ -189,18 +203,6 @@ class Parsedown
                         $CurrentBlock = $this->{'block'.$CurrentBlock['type'].'Complete'}($CurrentBlock);
                     }
                 }
-            }
-
-            # ~
-
-            if (isset($text[0]))
-            {
-                $marker = $text[0];
-            }
-            elseif ($this->literalBreaks)
-            {
-                $marker = '\n';
-                $text = '  ';
             }
 
             # ~
